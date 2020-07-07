@@ -9,7 +9,6 @@ from requests import request
 
 ip = socket.gethostbyname(socket.getfqdn(socket.gethostname()))  # 本机ip地址
 url = "http://%s:8002/" % ip  # 启动的url
-count = 11  # 需要查询的个数
 
 
 def inster():
@@ -30,8 +29,9 @@ def inster():
         print(req.json())
 
 
-def get_data():
-    urls = url+"get_ranking/11/"
+def get_data(start, stop):
+
+    urls = url+"get_ranking/%s/%s/" % (start, stop)
     req = request(method="POST", url=urls, timeout=20)
     data = req.json()
     print("\t\t\t\t=====================================================")
@@ -42,5 +42,14 @@ def get_data():
 
 
 if __name__ == "__main__":
-        inster()  # 添加数据
-        get_data()  # 查询数据
+
+        # inster()  # 添加数据
+        get_data(100, 1000)  # 查询数据
+        print(u"第二次查询")
+        get_data(10, 20)
+        print(u"第三次查询")
+        get_data(5, 6)
+        print(u"第四次查询")
+        get_data(7, 30)
+        print(u"第五次查询")
+        get_data(1, 10)
