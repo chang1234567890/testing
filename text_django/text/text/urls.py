@@ -22,6 +22,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^inserts/$', views.inserts, name='inserts'),
-    re_path(r'^get_ranking/(.+)/$', views.get_ranking, name='get_ranking'),
+    re_path(r'^get_ranking/(.+)/(.+)/$', views.get_ranking, name='get_ranking'),
 ]
 

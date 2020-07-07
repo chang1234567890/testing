@@ -25,8 +25,8 @@ def inserts(request):
 
 
 @csrf_exempt
-def get_ranking(request, num):
-    ret = Test.objects.all().order_by("-add_date")[:int(num)]
+def get_ranking(request, start, stop):
+    ret = Test.objects.all().order_by("-add_date")[:int(stop)]
     lists = []
     lists2 = []
     lists3 = []  # 保存区分客户端是否存在
@@ -35,8 +35,6 @@ def get_ranking(request, num):
 
         if i.client in lists3:
 
-            # inde = lists3.index(i.client)
-            # # lists3[inde][""]
             dicts = {
 
                 "客户端": i.client,
@@ -51,7 +49,7 @@ def get_ranking(request, num):
                 "分数": i.stock
             }
             lists.append(dicts)
-    lists = sorted(lists, key=lambda x : x['分数'], reverse=True)
+    lists = sorted(lists, key=lambda x: x['分数'], reverse=True)
     count = 0
     for j in lists:
         count += 1
@@ -59,7 +57,6 @@ def get_ranking(request, num):
         for i in lists2:
             if i["客户端"] == j["客户端"]:
                 i["排名"] = count
-    lis = lists+lists2
-
+    lis = (lists + lists2)[int(start):int(stop)+1]
     return JsonResponse(lis, safe=False, content_type="application/json")
 
